@@ -1,6 +1,7 @@
 const { createLogger, format, transports } = require("winston");
 require("winston-mongodb");
 require("express-async-errors");
+const config = require("config");
 
 const logger = createLogger({
 	level: "info",
@@ -28,10 +29,10 @@ const logger = createLogger({
 	],
 });
 
-// MongoDB Transport 
+// MongoDB Transport
 const transportOptions = async () => {
 	const MongoClient = require("mongodb").MongoClient;
-	const url = "your-db-url/vidly";
+	const url = config.get("db");
 
 	const client = new MongoClient(url);
 	await client.connect();

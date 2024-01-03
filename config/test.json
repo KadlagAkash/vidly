@@ -1,4 +1,4 @@
 {
-  "jwtPrivateKey": "1234",
-  "db": "your-db-url/vidly_tests"
+  "jwtPrivateKey": "",
+  "db": "vidly_test_db"
 }

@@ -38,7 +38,7 @@ const validateMovie = (movie) => {
 	const Schema = zod.object({
 		title: zod.string().min(2),
 		genreId: zod.string().refine((val) => val.length === 24, {
-			message: "Invalid customerId",
+			message: "Invalid genreId",
 		}),
 		numberInStock: zod.number().nonnegative(),
 		dailyRentalRate: zod.number().nonnegative(),
