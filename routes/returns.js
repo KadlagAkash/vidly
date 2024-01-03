@@ -6,23 +6,21 @@ const { Movie } = require("../models/movie");
 
 const router = express.Router();
 
-/* ----- Creating a User ----- */
 router.post("/", authorization, async (req, res) => {
 	// Validate the Input
 	const input = validateReturn(req.body);
 	if (!input.success)
 		return res.status(400).send(input.error.issues[0].message);
 
-  const rental = await Rental.lookup(req.body.customerId, req.body.movieId);
-  
+	// Validating Rental
+	const rental = await Rental.lookup(req.body.customerId, req.body.movieId);
+
 	if (!rental) res.status(404).send("Rental not found.");
 
 	if (rental.dateReturned) res.status(400).send("Rental alredy processed.");
-	// const daysDifference = Math.floor((rental.dateReturned - rental.dateOut) / 1000 / 60 / 60 / 24);
-	// rental.rentalFee = rental.movie.dailyRentalRate * daysDifference;
 
-  rental.return();
-  
+	rental.return();
+
 	await rental.save();
 
 	await Movie.updateOne(
